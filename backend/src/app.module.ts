@@ -6,6 +6,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver } from '@nestjs/apollo';
 import { UserModule } from './modules/user/user.module';
 import { DataSource } from 'typeorm';
+import { PassportModule } from '@nestjs/passport';
+import { AuthService } from './modules/auth/auth.service';
+import { LocalStrategy } from './modules/auth/local.strategy';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserService } from './modules/user/services/user.service';
+import { User } from './modules/user/entities/user.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './modules/auth/constants';
+import { JwtStrategy } from './modules/auth/jwt-strategy';
 
 @Module({
   imports: [
@@ -25,10 +34,17 @@ import { DataSource } from 'typeorm';
       synchronize: false,
     }),
     UserModule,
+    PassportModule,
+    AuthModule,
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '2h' },
+    }),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, LocalStrategy, JwtStrategy, AuthService, UserService],
 })
-export class AppModule { 
+export class AppModule {
   constructor(private dataSource: DataSource) {}
 }

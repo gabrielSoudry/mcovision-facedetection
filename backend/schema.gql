@@ -9,6 +9,7 @@ type User {
 }
 
 type Query {
+  whoAmI: User!
   user: [User!]!
 }
 
