@@ -4,7 +4,7 @@ import accueil from "../assets/mcovision2.svg";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 
 async function postData(url = '', data = {}) {
     // Default options are marked with *
@@ -24,7 +24,7 @@ async function postData(url = '', data = {}) {
     return await response.json(); // parses JSON response into native JavaScript objects
 }
 
-export default function Root() {
+export default function LogIn() {
     const [errorMessage, setErrorMessage] = useState(false)
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -41,6 +41,9 @@ export default function Root() {
         if (dataResponse.statusCode === 401) {
             console.log(dataResponse);
             setErrorMessage(true)
+        }
+        if (dataResponse.access_token) {
+            window.location.href = '/dashboard'; //relative to domain
         }
     };
     return (
