@@ -1,5 +1,6 @@
 import * as faceapi from 'face-api.js';
 import React from 'react';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
 
 function Dashboard() {
 
@@ -93,6 +94,7 @@ function Dashboard() {
 
     return (
         <div>
+            <ResponsiveAppBar />
             <div style={{ textAlign: 'center', padding: '10px' }}>
                 {
                     captureVideo && modelsLoaded ?
