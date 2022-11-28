@@ -36,6 +36,10 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.DATABASE_DB,
       entities: ['dist/**/*.entity.js'],
       synchronize: false,
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : false,
     }),
     UserModule,
     PassportModule,
