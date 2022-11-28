@@ -29,10 +29,6 @@ export default function LogIn() {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
         const dataResponse = await postData('http://localhost:3000/auth/login', {
             username: data.get('username'),
             password: data.get('password'),
